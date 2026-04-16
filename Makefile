@@ -1,66 +1,103 @@
 ##
-## EPITECH PROJECT, 2025
-## makefile
+## EPITECH PROJECT, 2026
+## MAKEFILE
 ## File description:
 ## makefile
 ##
 
-CC          = clang
-SRC         = SRC/builtins/cd.c	\
-				SRC/builtins/env.c	\
-				SRC/builtins/error_case_cd.c	\
-				SRC/builtins/save_old_directory.c	\
-				SRC/builtins/second_version_of_cd.c	\
-				SRC/builtins/setenv.c	\
-				SRC/builtins/unsetenv.c	\
-				SRC/function_for_minishell2/execute_commande_isntbuildin.c	\
-				SRC/function_for_minishell2/fonction_mysh_two.c	\
-				SRC/function_for_minishell2/signaux.c	\
-				SRC/piple/execute_buldin_in_piple.c	\
-				SRC/piple/piple.c	\
-				SRC/redirection/redirection.c	\
-				SRC/utilitaire_piscine/mini_printf.c	\
-				SRC/utilitaire_piscine/my_put_nbr.c	\
-				SRC/utilitaire_piscine/my_putchar.c	\
-				SRC/utilitaire_piscine/my_putstr.c	\
-				SRC/utilitaire_piscine/my_strcat.c	\
-				SRC/utilitaire_piscine/my_strcmp.c	\
-				SRC/utilitaire_piscine/my_strcpy.c	\
-				SRC/utilitaire_piscine/my_strdup.c	\
-				SRC/utilitaire_piscine/my_strncmp.c	\
-				SRC/main.c \
-				SRC/utilitaire_piscine/my_strlen.c \
+NAME	=	42sh
 
-TEST_SRC	= SRC/utilitaire_piscine/my_strcmp.c	\
-				SRC/utilitaire_piscine/my_putchar.c \
-				SRC/utilitaire_piscine/my_putstr.c	\
-				SRC/utilitaire_piscine/my_put_nbr.c	\
-				SRC/utilitaire_piscine/my_strdup.c	\
-				SRC/utilitaire_piscine/my_strlen.c	\
-				SRC/function_for_minishell2/fonction_mysh_two.c	\
+SRC	=	src/minishell.c\
+		src/exec_cmd.c\
+		src/find_cmd.c\
+		src/parse.c\
+		src/read_line.c\
+		src/built_in/handle_builin.c\
+		src/my_strcpy.c\
+		src/my_strcat.c\
+		src/my_strcmp.c\
+		src/my_putchar.c\
+		src/my_putstr.c\
+		src/my_strdup.c\
+		src/env_len.c\
+		src/free_all.c\
+		src/my_setenv.c\
+		src/built_in/handle_exit.c\
+		src/same_var.c\
+		src/my_strlen.c\
+		src/built_in/handle_env.c\
+		src/built_in/handle_cd.c\
+		src/get_var.c\
+		src/my_unsetenv.c\
+		src/built_in/handle_setenv.c\
+		src/built_in/handle_unset.c\
+		src/copy_env.c\
+		src/free_env.c\
+		src/my_strncmp.c\
+		src/expand_var.c\
+		src/my_printf.c\
+		src/parse_coma.c\
+		src/parse_pipe.c\
+		src/exec_pipe.c\
+		src/exec_coma.c\
+		src/has_pipe.c\
+		src/has_coma.c\
+		src/signaux.c	\
+		src/exec_redirec.c	\
+		src/mandatoty_and.c	\
 
-TEST        = tests/unit_test.c
-NAME        = 42sh
-TEST_NAME   = unit_tests
+CC	=	clang
 
-all: $(NAME)
+LFLAGS	=	--coverage -lcriterion
 
-$(NAME):
-	$(CC) $(SRC) -o $(NAME) -g3
+TESTS_SRC	=	src/my_strlen.c\
+			src/my_putchar.c\
+			src/my_putstr.c\
+			src/my_strcmp.c\
+			src/env_len.c\
+			src/same_var.c\
+			src/my_setenv.c\
+			src/my_strcpy.c\
+			src/my_strdup.c\
+			src/my_strcat.c\
+			src/free_env.c\
+			src/my_unsetenv.c\
+			src/my_strncmp.c\
+			src/get_var.c	\
 
-tests_run: fclean
-	$(CC) $(TEST_SRC) $(TEST) -o $(TEST_NAME) -lcriterion  -g3 --coverage -I./SRC
-	./$(TEST_NAME)
+TESTS	=	tests/tests.c\
+		tests/test_env.c\
+		tests/test_same_var.c\
+		tests/test_setenv.c\
+		tests/test_line.c\
+		tests/test_unsetenv.c\
+		tests/test_get_var.c\
+		tests/test_strncmp.c\
+		tests/test_full_env.c\
+
+all:
+	clang -o $(NAME) $(SRC) -g3
 
 clean:
-	rm -f *.o
-	rm -f SRC/*.o
-	rm -f tests/*.o
-	rm -f *.gcda
-	rm -f *.gcno
-
-fclean: clean
 	rm -f $(NAME)
-	rm -f $(TEST_NAME)
 
-re: fclean all
+fclean:	clean
+	rm -f /src/*~
+	rm -f ./Tests/*~
+	@rm -f *.gcno
+	@rm -f *.gcda
+	rm -f unit_tests
+
+coding_style1:
+	epiclang ./src/*.c
+
+coding_style2:
+	epiclang ./src/built_in/*.c
+
+re:	fclean all
+
+unit_tests: fclean
+	clang -o unit_tests $(TESTS) $(TESTS_SRC) $(LFLAGS)
+
+tests_run: unit_tests
+	./unit_tests
