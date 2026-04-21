@@ -1,0 +1,40 @@
+name: 42sh
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc make
+
+      - name: Compilation
+        run: make re
+
+      - name: Check binary exists
+        run: test -f ./42sh
+
+      - name: Test basic commands
+        run: |
+          echo "ls" | ./42sh
+          echo "pwd" | ./42sh
+          echo "env" | ./42sh
+          echo "ls | wc -l" | ./42sh
+          echo "ls ; pwd" | ./42sh
+          echo "setenv CPE 42sh" | ./42sh
+          echo "cd /tmp ; pwd" | ./42sh
+          echo "ls && ls -l" | ./42sh
+          echo "ls && cv" | ./42sh
+          echo "&&" | ./42sh
+          echo "cv && ls" | ./42sh
