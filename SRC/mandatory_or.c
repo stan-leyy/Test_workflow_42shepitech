@@ -28,7 +28,7 @@ char **parse_or(char *line)
 
     token = strtok(copy, "|");
     while (token != NULL && i < 63) {
-         while (*token == '|' || *token == ' ')
+        while (*token == '|' || *token == ' ')
             token++;
         if (*token == '\0')
             buffer[i] = NULL;

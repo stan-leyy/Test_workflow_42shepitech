@@ -18,3 +18,8 @@ int my_put_nbr(int nb)
     my_putchar((nb % 10) + '0');
     return 0;
 }
+
+void change_int_in_string(int nb, char *str)
+{
+    snprintf(str, 12, "%d", nb);
+}

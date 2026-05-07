@@ -7,29 +7,6 @@
 
 #include "my.h"
 
-// char *return_new_env(char **buffer, char **env)
-// {
-//     char **env_copy = NULL;
-//     int pos = my_getenv(env, buffer[1]);
-//     int i = 0;
-
-//     while (env[i] != NULL)
-//         i++;
-//     env_copy = malloc(sizeof(char *) * (i + 1));
-//     i = 0;
-//     while (env[i] != NULL) {
-//         env_copy[i] = my_strdup(env[i]);
-//         i++;
-//     }
-//     env_copy[i] = NULL;
-//     i = pos;
-//     while (env_copy[i + 1] != NULL) {
-//         env[i] = env_copy[i + 1];
-//         i++;
-//     }
-//     return env[i];
-// }
-
 int my_unsetenv_buildin(char **buffer, char **env)
 {
     int pos = 0;

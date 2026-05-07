@@ -18,7 +18,7 @@ int execute_builtin_in_pipe_coding_style(char **av, char **env)
             i++;
         }
     } else {
-        if (tcsh_retour(av, env) == 0)
+        if (shell_retour(av, env) == 0)
             my_setenv_buildin(av, env);
     }
     return 1;

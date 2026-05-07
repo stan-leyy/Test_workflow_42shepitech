@@ -131,8 +131,7 @@ int execute_buildin(char **buffer, char **env, char **old_directory)
         return 0;
     }
     if (my_strcmp(buffer[0], "cd") == 0) {
-        buildin_cd(buffer, env, old_directory);
-        return 0;
+        return buildin_cd(buffer, env, old_directory);
     }
     if (my_strcmp(buffer[0], "env") == 0) {
         display_environnement(env);
@@ -159,7 +158,7 @@ int execute_buildin_second(char **buffer, char **old_directory,
     if (execute_buildin_second_prime(buffer, old_directory) == -1)
         return -1;
     if (my_strcmp(buffer[0], "setenv") == 0) {
-        *code = tcsh_retour(buffer, env);
+        *code = shell_retour(buffer, env);
         if (*code == 0)
             my_setenv_buildin(buffer, env);
         return *code == 0 ? -1 : *code;

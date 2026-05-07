@@ -35,6 +35,33 @@ int run_or_loop(principal_function_t *a, char **or_cmds,
     return a->code_de_retour;
 }
 
+int only_or(char *line)
+{
+    int i = 0;
+
+    while (line[i] == ' ' || line[i] == '\t')
+        i++;
+    if (line[i] != '|' || line[i + 1] != '|')
+        return 0;
+    i += 2;
+    while (line[i] == ' ' || line[i] == '\t')
+        i++;
+    if (line[i] == '\0')
+        return 1;
+    return 0;
+}
+
+int ends_with_or(char *line)
+{
+    int i = my_strlen(line) - 1;
+
+    while (i >= 0 && (line[i] == ' ' || line[i] == '\t'))
+        i--;
+    if (i >= 1 && line[i] == '|' && line[i - 1] == '|')
+        return 1;
+    return 0;
+}
+
 int handle_or(principal_function_t *a, char **env)
 {
     char **or_cmds = NULL;
@@ -42,7 +69,7 @@ int handle_or(principal_function_t *a, char **env)
     if (!such_or(a->commands[a->i]))
         return 0;
     or_cmds = parse_or(a->commands[a->i]);
-     if (or_cmds[1] == NULL) {
+    if (or_cmds[1] == NULL) {
         dprintf(2, "Invalid null command.\n");
         free(or_cmds);
         return 1;
@@ -55,8 +82,6 @@ int handle_or(principal_function_t *a, char **env)
         return 1;
     }
     run_or_loop(a, or_cmds, env);
-    // for (int j = 0; or_cmds[j]; j++)
-    //     free(or_cmds[j]);
     free(or_cmds);
     return 1;
 }

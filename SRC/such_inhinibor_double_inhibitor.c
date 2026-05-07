@@ -7,12 +7,12 @@
 
 #include "my.h"
 
-int such_inhibitor_slach(char *line)
+int such_inhibitor_double_quote(char *line)
 {
     int i = 0;
 
-    while(line[i] != '\0') {
-        if (line[i] == '/')
+    while (line[i] != '\0') {
+        if (line[i] == '\"')
             return 1;
         i++;
     }

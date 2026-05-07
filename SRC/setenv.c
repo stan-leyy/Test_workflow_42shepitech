@@ -91,7 +91,7 @@ static int decoup_function3(char **buffer)
     return 0;
 }
 
-int tcsh_retour(char **buffer, char **env)
+int shell_retour(char **buffer, char **env)
 {
     int result = decoup_function(buffer, env);
 

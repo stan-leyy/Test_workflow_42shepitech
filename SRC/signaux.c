@@ -16,14 +16,27 @@ void handle_sigint(int sig)
     write(1, "$> ", 3);
 }
 
+void handle_sigchild(int sig)
+{
+    (void)sig;
+}
+
 void setup_signals(void)
 {
     signal(SIGINT, handle_sigint);
     signal(SIGQUIT, SIG_IGN);
+    signal(SIGCHLD, handle_sigchild);
+    signal(SIGTTOU, SIG_IGN);
+    signal(SIGTTIN, SIG_IGN);
+    signal(SIGTSTP, SIG_IGN);
 }
 
 void restore_signals(void)
 {
     signal(SIGINT, SIG_DFL);
     signal(SIGQUIT, SIG_DFL);
+    signal(SIGCHLD, SIG_DFL);
+    signal(SIGTTOU, SIG_DFL);
+    signal(SIGTTIN, SIG_DFL);
+    signal(SIGTSTP, SIG_DFL);
 }

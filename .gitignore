@@ -1,0 +1,5 @@
+*.o
+*.gcno
+*.gcda
+a.out
+.txt
